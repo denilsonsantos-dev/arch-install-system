@@ -1,0 +1,27 @@
+INSTALL_TARGET = "UEFI"
+
+# CONFIGURAÇÕES DE DISCO
+DISK = "/dev/nvme0n1"
+DISK_WITH_PARTITION_SUFIX = f"{DISK}p"
+
+ESP_LABEL = "BOOTLOADER"
+ESP_PARTITION = f"{DISK_WITH_PARTITION_SUFIX}1" # Partição utilizada como bootloader
+ESP_SIZE = "1G"
+
+ROOT_LABEL = "ArchTempOS"
+ROOT_PARTITION = f"{DISK_WITH_PARTITION_SUFIX}2" # Partição utilizada pela instalação temporária
+ROOT_SIZE = "118G"
+
+# CONFIGURAÇÕES DE DISCO (PARA PARTICIONAMENTO)
+ARCHOS_LABEL = "ArchOS"
+ARCHOS_PARTITION = f"{DISK_WITH_PARTITION_SUFIX}3"
+
+# CONFIGURACOES PARA O KERNEL E BOOTLOADER
+UKI_BASE_PATH = "/EFI/Linux/arch-temp-linux-zen.efi" # Caminho-base, usado somente para configuracao da entrada no menu de sistemas
+UKI_PATH = f"/efi/{UKI_BASE_PATH}" # Caminho aonde a imagem unificada do kernel ficara armazenada
+SYSTEMD_BOOT_ENTRY = "arch-temp.conf" # Nome do arquivo configurando a entrada do sistema no menu
+SYSTEMD_BOOT_TITLE = "Arch Linux [TEMP]" # Nome do sistema no menu de selecao de sistema
+
+# CONFIGURAÇOES DE SWAP
+SWAPFILE = "/mnt/swapfile"
+SWAP_SIZE_MB = 16384
