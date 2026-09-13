@@ -1,31 +1,11 @@
 import os
 
 from common import (
-    ROOT_PARTITION,
     ROOT_LABEL,
     UKI_PATH,
     StepError,
     chroot_checked,
-    require_success,
-    run_command,
 )
-
-def _get_root_uuid() -> str:
-    """
-    Obtém e valida o UUID da partição raiz.
-    """
-    result = run_command([
-        "blkid", "-s", "UUID", "-o", "value",
-        ROOT_PARTITION,
-    ])
-    require_success(
-        result,
-        f"não foi possível obter o UUID de {ROOT_PARTITION}.",
-    )
-    uuid = (result.stdout or "").strip()
-    if not uuid:
-        raise StepError(f"o UUID de {ROOT_PARTITION} não foi retornado pelo blkid.")
-    return uuid
 
 def _prepare_uki_directory() -> None:
     """Cria o diretório de destino da UKI definido por UKI_PATH."""
@@ -218,8 +198,7 @@ def run() -> None:
     _install_kernel_dependencies()
     _prepare_uki_directory()
     
-    root_uuid = _get_root_uuid()
-    _write_kernel_cmdline(root_uuid)
+    _write_kernel_cmdline()
     
     _configure_kernel_preset()
     _ensure_microcode_hook()
