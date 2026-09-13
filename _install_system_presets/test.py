@@ -18,7 +18,8 @@ ARCHOS_PARTITION = f"{DISK_WITH_PARTITION_SUFIX}3"
 ARCHOS_SIZE = "0"
 
 # CONFIGURACOES PARA O KERNEL E BOOTLOADER
-UKI_PATH = "/efi/EFI/Linux/arch-temp-linux-zen.efi" # Caminho aonde a imagem unificada do kernel ficara armazenada
+UKI_BASE_PATH = "/EFI/Linux/arch-temp-linux-zen.efi" # Caminho-base, usado somente para configuracao da entrada no menu de sistemas
+UKI_PATH = f"/efi/{UKI_BASE_PATH}" # Caminho aonde a imagem unificada do kernel ficara armazenada
 SYSTEMD_BOOT_ENTRY = "arch-temp.conf" # Nome do arquivo configurando a entrada do sistema no menu
 SYSTEMD_BOOT_TITLE = "Arch Linux [TEMP]" # Nome do sistema no menu de selecao de sistema
 
