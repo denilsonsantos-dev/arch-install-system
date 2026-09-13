@@ -1,5 +1,7 @@
 import os
 import shutil
+import unicodedata
+
 
 from common import (
     DISK,
@@ -21,18 +23,30 @@ from common import (
     run_command,
 )
 
+def _normalizar_erro(text: str) -> str:
+    return "".join(
+        char
+        for char in unicodedata.normalize("NFD", text)
+        if unicodedata.category(char) != "Mn"
+    )
+
 def _unmount_target() -> None:
-    """
-    Desmonta recursivamente o ponto de montagem /mnt.
-    """
+    """Desmonta recursivamente o ponto de montagem /mnt."""
     result = run_command(["umount", "-R", "/mnt"])
-    if result.returncode not in (0, 32):
-        raise StepError(
-            command_error(
-                result,
-                "não foi possível desmontar /mnt.",
-            )
+    error = _normalizar_erro(result.stderr.strip().lower()) if result.stderr else ""
+    
+    if result.returncode == 0:
+        return
+
+    if "nao montado" in error:
+        return
+    
+    raise StepError(
+        command_error(
+            result,
+            "não foi possível desmontar /mnt.",
         )
+    )
 
 def _confirm_disk_wipe() -> None:
     """
