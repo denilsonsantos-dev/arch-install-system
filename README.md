@@ -2,13 +2,15 @@
 
 Execute a partir da raiz:
 
-    sudo python3 main.py
+```bash
+sudo python3 main.py
+```
 
-Cada etapa possui sua própria pasta e `main.py`. O arquivo `common.py`
-contém somente infraestrutura compartilhada entre etapas.
+Cada etapa possui sua própria pasta e `main.py`. O arquivo `common.py` contém somente infraestrutura compartilhada entre etapas.
 
 Estrutura:
 
+```text
 arch-install-system/
 ├── main.py
 ├── common.py
@@ -36,6 +38,7 @@ arch-install-system/
 ├── configure_systemd_boot/
 ├── configure_aur_helper/
 ├── configure_network/
-├── install_nano/
+└── install_nano/
+```
 
 As pastas de etapa possuem também `__init__.py` para serem pacotes Python.
